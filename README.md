@@ -1,2 +1,2 @@
 # zoomcampNotes
- My Notes and Homeworks from the course
+ My Notes and Homeworks for the Zoomcamp Data Engineerging course - 2025
