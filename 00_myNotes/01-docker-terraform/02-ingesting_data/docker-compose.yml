@@ -1,0 +1,38 @@
+# usage: docker compose -f /home/bcalegari/projects/zoomcampNotes/00_myNotes/01-docker-terraform/02-ingesting_data/docker-compose.yml up
+# use -d for detachable mode
+
+name: pgsql_compose
+networks:
+    pg-network:
+      driver: bridge
+
+services:
+  pgdatabase:
+    image: postgres:17
+    container_name: pgdatabase
+    networks:
+      - pg-network
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=ny_taxi_data
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./ny_taxi_postgres_data:/var/lib/postgresql/data:rw"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin1
+    networks:
+      - pg-network
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+    ports:
+      - "8080:80"
+    volumes:
+      - "pgadmin_conn_data:/var/lib/pgadmin:rw"
+volumes:
+  pgadmin_conn_data:
+  ny_taxi_postgres_data:
